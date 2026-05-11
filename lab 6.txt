@@ -1,0 +1,97 @@
+public class PizzaOrder {
+
+    private String orderID;
+    private String customerName;
+    private String size;
+    private int toppingCount;
+    private boolean isDelivery;
+
+    // Default constructor
+    public PizzaOrder() {
+        this.orderID = "O001";
+        this.customerName = "Unknown";
+        this.size = "Small";
+        this.toppingCount = 0;
+        this.isDelivery = false;
+    }
+
+    // Overloaded constructor 1
+    public PizzaOrder(String orderID, String customerName) {
+        this.orderID = orderID;
+        this.customerName = customerName;
+        this.size = "Small";
+        this.toppingCount = 0;
+        this.isDelivery = false;
+    }
+
+    // Overloaded constructor 2
+    public PizzaOrder(String orderID, String customerName, String size, int toppingCount, boolean isDelivery) {
+        this.orderID = orderID;
+        this.customerName = customerName;
+        setSize(size);
+        this.toppingCount = toppingCount;
+        this.isDelivery = isDelivery;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        if (size.equalsIgnoreCase("Small") ||
+            size.equalsIgnoreCase("Medium") ||
+            size.equalsIgnoreCase("Large")) {
+            this.size = size;
+        } else {
+            this.size = "Small";
+        }
+    }
+
+    public double getBasePrice() {
+        if (size.equalsIgnoreCase("Small")) {
+            return 8.00;
+        } else if (size.equalsIgnoreCase("Medium")) {
+            return 10.00;
+        } else {
+            return 12.00;
+        }
+    }
+
+    public double calculateTotalPrice() {
+        double total = getBasePrice() + (toppingCount * 1.50);
+
+        if (isDelivery) {
+            total += 5.00;
+        }
+
+        return total;
+    }
+
+    public double calculateTotalPrice(double discountPercentage) {
+        double total = calculateTotalPrice();
+        double discount = total * discountPercentage / 100;
+        return total - discount;
+    }
+
+    public int estimatePreparationTime() {
+        return 15 + (2 * toppingCount);
+    }
+
+    public void displayOrderDetails() {
+        System.out.println("Order ID: " + orderID);
+        System.out.println("Customer Name: " + customerName);
+        System.out.println("Pizza Size: " + size);
+        System.out.println("Topping Count: " + toppingCount);
+        System.out.println("Delivery: " + (isDelivery ? "Yes" : "No"));
+        System.out.println("Total Price: $" + calculateTotalPrice());
+        System.out.println("Estimated Preparation Time: " + estimatePreparationTime() + " minutes");
+    }
+
+    public static void main(String[] args) {
+        PizzaOrder order1 = new PizzaOrder("P001", "Nimeshan", "Large", 3, true);
+
+        order1.displayOrderDetails();
+
+        System.out.println("Total after 10% discount: $" + order1.calculateTotalPrice(10));
+    }
+}

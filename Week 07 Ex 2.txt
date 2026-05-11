@@ -1,0 +1,106 @@
+Week 07 Ex 2
+
+public class Meal {
+    protected String orderID;
+    protected String customerName;
+    protected int quantity;
+
+    public Meal() {
+        orderID = "000";
+        customerName = "Guest";
+        quantity = 0;
+    }
+
+    public Meal(String orderID, String customerName, int quantity) {
+        this.orderID = orderID;
+        this.customerName = customerName;
+        this.quantity = quantity;
+    }
+
+    void displayOrderDetails(){
+        System.out.println("Order ID: " + orderID);
+        System.out.println("Customer Name: " + customerName);
+        System.out.println("Quantity: " + quantity);
+    }
+
+    double calculateBill(){
+        return 12.00*quantity;
+    }
+
+    double calculateBill(int couponAmo){
+        double base = calculateBill();
+        double finalAmo =  base - couponAmo;
+
+        return (finalAmo < 0) ? 0 : base;
+    }
+}
+
+public class RegularMeal extends Meal{
+    private boolean isVeg;
+
+    public RegularMeal() {
+        super();
+        this.isVeg = true;
+    }
+
+    @Override
+    double calculateBill() {
+        return 10*quantity;
+    }
+
+    @Override
+    void displayOrderDetails() {
+        super.displayOrderDetails();
+        System.out.println("Meal Type: " + (isVeg ? "Vegetarian" : "Non-Vegetarian"));
+        System.out.println("Total Bill: $" + calculateBill());
+        System.out.println("Bill with $2 coupon: $" + calculateBill(2));
+
+    }
+}
+
+
+public class ComboMeal extends Meal{
+    private boolean includesDrinkAndDessert;
+
+    public ComboMeal(String orderID, String customerName, int quantity, boolean includesDrinkAndDessert) {
+        super(orderID, customerName, quantity);
+        this.includesDrinkAndDessert = includesDrinkAndDessert;
+    }
+
+    @Override
+    double calculateBill() {
+        double tot = 15.0*quantity;
+        if (includesDrinkAndDessert){
+            tot+=5;
+        }
+        return tot;
+    }
+
+    @Override
+    double calculateBill(int couponAmount){
+        return calculateBill() - (couponAmount * quantity);
+    }
+
+    @Override
+    void displayOrderDetails() {
+        super.displayOrderDetails();
+        System.out.println("Includes Drink & Dessert: " + (includesDrinkAndDessert? "Yes" : "No"));
+        System.out.println("Total Bill: $" + calculateBill());
+        System.out.println("Bill with $3 coupon: $" + calculateBill(3));
+    }
+
+}
+
+
+public class ResturantApp {
+    public static void main(String[] args) {
+        RegularMeal r1 = new RegularMeal();
+        ComboMeal c1 = new ComboMeal("C102", "Alice Green", 2,true);
+
+        System.out.println("--- Regular Meal ---");
+        r1.displayOrderDetails();
+
+        System.out.println("\n--- Combo Meal ---");
+        c1.displayOrderDetails();
+    }
+}

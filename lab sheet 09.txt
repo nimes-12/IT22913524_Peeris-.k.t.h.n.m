@@ -1,0 +1,390 @@
+QUESTION 01 – Transport Fare System
+
+abstract class Transport {
+
+    protected String vehicleNumber;
+    protected double distanceTravelled;
+
+    public Transport(String vehicleNumber, double distanceTravelled) {
+
+        this.vehicleNumber = vehicleNumber;
+        this.distanceTravelled = distanceTravelled;
+    }
+
+    abstract double calculateFare();
+
+    public void displayDetails() {
+
+        System.out.println("Vehicle Number : " + vehicleNumber);
+        System.out.println("Distance Travelled : " + distanceTravelled);
+    }
+}
+
+class Bus extends Transport {
+
+    public Bus(String vehicleNumber, double distanceTravelled) {
+
+        super(vehicleNumber, distanceTravelled);
+    }
+
+    @Override
+    double calculateFare() {
+
+        return 10 * distanceTravelled;
+    }
+
+    @Override
+    public void displayDetails() {
+
+        super.displayDetails();
+        System.out.println("Bus Fare : " + calculateFare());
+    }
+}
+
+class Taxi extends Transport {
+
+    public Taxi(String vehicleNumber, double distanceTravelled) {
+
+        super(vehicleNumber, distanceTravelled);
+    }
+
+    @Override
+    double calculateFare() {
+
+        return (20 * distanceTravelled) + 50;
+    }
+
+    @Override
+    public void displayDetails() {
+
+        super.displayDetails();
+        System.out.println("Taxi Fare : " + calculateFare());
+    }
+}
+
+public class TransportApp {
+
+    public static void main(String[] args) {
+
+        Bus b1 = new Bus("BUS101", 15);
+
+        Taxi t1 = new Taxi("TAXI501", 10);
+
+        System.out.println("===== Bus Details =====");
+        b1.displayDetails();
+
+        System.out.println("\n===== Taxi Details =====");
+        t1.displayDetails();
+    }
+}
+
+QUESTION 02 – Printing Management System
+
+interface Printable {
+
+    void printDetails();
+}
+
+class Report implements Printable {
+
+    private String title;
+
+    public Report(String title) {
+
+        this.title = title;
+    }
+
+    @Override
+    public void printDetails() {
+
+        System.out.println("Report Title : " + title);
+    }
+}
+
+class Invoice implements Printable {
+
+    private String invoiceId;
+
+    public Invoice(String invoiceId) {
+
+        this.invoiceId = invoiceId;
+    }
+
+    @Override
+    public void printDetails() {
+
+        System.out.println("Invoice ID : " + invoiceId);
+    }
+}
+
+public class PrintApp {
+
+    public static void main(String[] args) {
+
+        Printable[] items = new Printable[4];
+
+        items[0] = new Report("Annual Report");
+        items[1] = new Report("Project Report");
+
+        items[2] = new Invoice("INV1001");
+        items[3] = new Invoice("INV1002");
+
+        for(int i = 0; i < items.length; i++) {
+
+            items[i].printDetails();
+        }
+    }
+}
+
+QUESTION 03 – University System
+class Student {
+
+    private String studentId;
+    private String studentName;
+
+    static String universityName;
+
+    public Student(String studentId, String studentName) {
+
+        this.studentId = studentId;
+        this.studentName = studentName;
+    }
+
+    public void displayStudentInfo() {
+
+        System.out.println("Student ID : " + studentId);
+        System.out.println("Student Name : " + studentName);
+        System.out.println("University : " + universityName);
+        System.out.println();
+    }
+}
+
+public class UniversityApp {
+
+    public static void main(String[] args) {
+
+        Student.universityName = "SLIIT";
+
+        Student s1 = new Student("IT101", "Nimeshan");
+        Student s2 = new Student("IT102", "Kamal");
+        Student s3 = new Student("IT103", "Nimal");
+
+        s1.displayStudentInfo();
+        s2.displayStudentInfo();
+        s3.displayStudentInfo();
+
+        System.out.println("===== University Changed =====");
+
+        Student.universityName = "NSBM";
+
+        s1.displayStudentInfo();
+        s2.displayStudentInfo();
+        s3.displayStudentInfo();
+    }
+}
+
+QUESTION 04 – Device Inventory System
+
+class Device {
+
+    private String deviceId;
+    private String deviceType;
+
+    static int deviceCount;
+
+    static {
+
+        deviceCount = 100;
+    }
+
+    public Device(String deviceId, String deviceType) {
+
+        this.deviceId = deviceId;
+        this.deviceType = deviceType;
+
+        deviceCount++;
+    }
+
+    public void displayInfo() {
+
+        System.out.println("Device ID : " + deviceId);
+        System.out.println("Device Type : " + deviceType);
+    }
+
+    public static void displayDeviceCount() {
+
+        System.out.println("Current Device Count : " + deviceCount);
+    }
+}
+
+public class DeviceApp {
+
+    public static void main(String[] args) {
+
+        Device d1 = new Device("D101", "Laptop");
+        Device d2 = new Device("D102", "Printer");
+        Device d3 = new Device("D103", "Scanner");
+
+        d1.displayInfo();
+        d2.displayInfo();
+        d3.displayInfo();
+
+        Device.displayDeviceCount();
+    }
+}
+
+
+QUESTION 05 – Employee Payroll System
+
+abstract class Employee {
+
+    protected String empId;
+    protected String name;
+
+    public Employee(String empId, String name) {
+
+        this.empId = empId;
+        this.name = name;
+    }
+
+    abstract double calculateSalary();
+}
+
+interface Payable {
+
+    void generatePayslip();
+}
+
+class PermanentEmployee extends Employee implements Payable {
+
+    private double monthlySalary;
+
+    public PermanentEmployee(String empId,
+                             String name,
+                             double monthlySalary) {
+
+        super(empId, name);
+
+        this.monthlySalary = monthlySalary;
+    }
+
+    @Override
+    double calculateSalary() {
+
+        return monthlySalary;
+    }
+
+    @Override
+    public void generatePayslip() {
+
+        System.out.println("Permanent Employee Payslip");
+        System.out.println("Salary : " + calculateSalary());
+    }
+}
+
+class ContractEmployee extends Employee implements Payable {
+
+    private int hoursWorked;
+    private double hourlyRate;
+
+    public ContractEmployee(String empId,
+                            String name,
+                            int hoursWorked,
+                            double hourlyRate) {
+
+        super(empId, name);
+
+        this.hoursWorked = hoursWorked;
+        this.hourlyRate = hourlyRate;
+    }
+
+    @Override
+    double calculateSalary() {
+
+        return hoursWorked * hourlyRate;
+    }
+
+    @Override
+    public void generatePayslip() {
+
+        System.out.println("Contract Employee Payslip");
+        System.out.println("Salary : " + calculateSalary());
+    }
+}
+
+public class PayrollApp {
+
+    public static void main(String[] args) {
+
+        PermanentEmployee p1 =
+                new PermanentEmployee("E101",
+                        "Nimeshan",
+                        85000);
+
+        ContractEmployee c1 =
+                new ContractEmployee("E102",
+                        "Kamal",
+                        120,
+                        500);
+
+        p1.generatePayslip();
+
+        System.out.println();
+
+        c1.generatePayslip();
+    }
+}
+
+
+QUESTION 06 – E-Learning Platform
+
+
+interface Enrollable {
+
+    void enrollCourse(String courseName);
+}
+
+interface Teachable {
+
+    void assignCourse(String courseName);
+}
+
+class Student implements Enrollable {
+
+    @Override
+    public void enrollCourse(String courseName) {
+
+        System.out.println("Student enrolled in : " + courseName);
+    }
+}
+
+class Instructor implements Enrollable, Teachable {
+
+    @Override
+    public void enrollCourse(String courseName) {
+
+        System.out.println("Instructor enrolled in : " + courseName);
+    }
+
+    @Override
+    public void assignCourse(String courseName) {
+
+        System.out.println("Instructor assigned to teach : " + courseName);
+    }
+}
+
+public class ELearningApp {
+
+    public static void main(String[] args) {
+
+        Student s1 = new Student();
+
+        Instructor i1 = new Instructor();
+
+        s1.enrollCourse("OOP");
+
+        i1.enrollCourse("AI");
+
+        i1.assignCourse("Java Programming");
+    }
+}

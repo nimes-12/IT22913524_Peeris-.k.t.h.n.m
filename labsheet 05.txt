@@ -1,0 +1,277 @@
+import java.util.Scanner;
+
+public class PizzaOrder {
+
+    // Attributes
+    private String orderID;
+    private String customerName;
+    private String size;
+    private int toppingCount;
+    private boolean isDelivery;
+
+    // Default Constructor
+    public PizzaOrder() {
+        this.orderID = "O000";
+        this.customerName = "Unknown";
+        this.size = "Small";
+        this.toppingCount = 0;
+        this.isDelivery = false;
+    }
+
+    // Constructor with orderID and customerName
+    public PizzaOrder(String orderID, String customerName) {
+        this.orderID = orderID;
+        this.customerName = customerName;
+        this.size = "Small";
+        this.toppingCount = 0;
+        this.isDelivery = false;
+    }
+
+    // Constructor with all attributes
+    public PizzaOrder(String orderID, String customerName,
+                      String size, int toppingCount, boolean isDelivery) {
+
+        this.orderID = orderID;
+        this.customerName = customerName;
+        setSize(size);
+        this.toppingCount = toppingCount;
+        this.isDelivery = isDelivery;
+    }
+
+    // Getter
+    public String getSize() {
+        return size;
+    }
+
+    // Setter with validation
+    public void setSize(String size) {
+
+        if(size.equalsIgnoreCase("Small") ||
+           size.equalsIgnoreCase("Medium") ||
+           size.equalsIgnoreCase("Large")) {
+
+            this.size = size;
+        }
+        else {
+            this.size = "Small";
+        }
+    }
+
+    // Get base price
+    public double getBasePrice() {
+
+        if(size.equalsIgnoreCase("Small")) {
+            return 8.00;
+        }
+        else if(size.equalsIgnoreCase("Medium")) {
+            return 10.00;
+        }
+        else {
+            return 12.00;
+        }
+    }
+
+    // Calculate total price
+    public double calculateTotalPrice() {
+
+        double total = getBasePrice();
+
+        // Add topping price
+        total += toppingCount * 1.50;
+
+        // Add delivery fee
+        if(isDelivery) {
+            total += 5.00;
+        }
+
+        return total;
+    }
+
+    // Overloaded method with discount
+    public double calculateTotalPrice(double discountPercentage) {
+
+        double total = calculateTotalPrice();
+
+        double discount = total * (discountPercentage / 100);
+
+        return total - discount;
+    }
+
+    // Preparation time
+    public int estimatePreparationTime() {
+
+        return 15 + (2 * toppingCount);
+    }
+
+    // Display order details
+    public void displayOrderDetails() {
+
+        System.out.println("========== Pizza Order ==========");
+        System.out.println("Order ID : " + orderID);
+        System.out.println("Customer Name : " + customerName);
+        System.out.println("Pizza Size : " + size);
+        System.out.println("Topping Count : " + toppingCount);
+        System.out.println("Delivery : " + isDelivery);
+        System.out.println("Base Price : $" + getBasePrice());
+        System.out.println("Total Price : $" + calculateTotalPrice());
+        System.out.println("Estimated Preparation Time : "
+                            + estimatePreparationTime() + " minutes");
+    }
+
+    // Main Method
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        // First order
+        PizzaOrder order1 =
+                new PizzaOrder("O3001",
+                        "Olivia Green",
+                        "Medium",
+                        3,
+                        true);
+
+        order1.displayOrderDetails();
+
+        // Second order with discount
+        PizzaOrder order2 =
+                new PizzaOrder("O3002",
+                        "Noah Smith",
+                        "Large",
+                        2,
+                        false);
+
+        System.out.print("\nEnter discount percentage : ");
+        double percentage = sc.nextDouble();
+
+        System.out.println("Order 02 Price after discount : $"
+                + order2.calculateTotalPrice(percentage));
+
+        // Third order using default constructor
+        PizzaOrder order3 = new PizzaOrder();
+
+        order3.displayOrderDetails();
+
+        sc.close();
+    }
+
+
+
+
+QUESTION 02 – VTV Cable TV System
+(a) All Nouns
+
+VTV, Cable TV company, channels, customers, person, customer details, package, registration, customer number, customer table, subscription table, bill, website, online tasks, subscription, TV schedule, email, monthly bills, credit card, amount, payment details, Payments Table, Channel details Table, system.
+
+(b) Potential Classes with Rejections
+Accepted Classes
+Potential Classes
+Customer
+Subscription
+Channel
+Bill
+Payment
+CreditCard
+TVSchedule
+VTVSystem
+Rejected Nouns Using Five Rules
+Rejected Noun	Reason
+VTV	Organization name
+Cable TV company	Too general
+Person	Same as customer
+Customer details	Attribute
+Package	Part of subscription
+Registration	Process
+Customer number	Attribute
+Customer table	Database table
+Subscription table	Database table
+Website	Interface
+Online tasks	Methods
+Email	Communication method
+Amount	Attribute
+Payments Table	Database table
+Channel details Table	Database table
+System	Too general
+Verbs and Methods
+Verb	Possible Method
+register	registerCustomer()
+provide details	setCustomerDetails()
+add channels	addChannel()
+remove channels	removeChannel()
+update	updateSubscription()
+login	login()
+send bill	generateBill()
+pay	makePayment()
+send email	sendScheduleEmail()
+(c) CRC Cards
+CRC Card – Customer
+Class	Customer
+Responsibilities	Register, login, manage subscription, pay bill
+Collaborators	Subscription, Bill, Payment
+CRC Card – Subscription
+Class	Subscription
+Responsibilities	Store channels, update subscription
+Collaborators	Customer, Channel
+CRC Card – Channel
+Class	Channel
+Responsibilities	Store channel details, provide TV schedules
+Collaborators	Subscription, TVSchedule
+CRC Card – Bill
+Class	Bill
+Responsibilities	Generate customer bill
+Collaborators	Customer, Subscription
+CRC Card – Payment
+Class	Payment
+Responsibilities	Process payment, store payment details
+Collaborators	Customer, CreditCard
+QUESTION 03 – Online Bookshop System
+(a) All Nouns
+
+Online bookshop, books, magazines, CDs, products, price, title, author, number of pages, artists, type, customers, orders, shipments, store, payments, delivery, business customers, invoice, credit card, contact information, authentication, invoicing, reports.
+
+(b) Potential Classes
+Accepted Classes
+Potential Classes
+Product
+Book
+Magazine
+CD
+Customer
+PersonalCustomer
+BusinessCustomer
+Order
+OrderItem
+Shipment
+Payment
+CreditCard
+Invoice
+Report
+Rejected Nouns Using Five Rules
+Rejected Noun	Reason
+Online bookshop	System name
+Price	Attribute
+Title	Attribute
+Author	Attribute
+Number of pages	Attribute
+Artists	Attribute
+Type	Attribute
+Store	Same as system
+Delivery	Process
+Contact information	Attribute
+Authentication	Process
+Invoicing	Process
+Verbs and Methods
+Verb	Possible Method
+sell	addProduct()
+place orders	createOrder()
+deliver	createShipment()
+pay	makePayment()
+register	registerCustomer()
+add customer	addCustomer()
+remove customer	removeCustomer()
+update product	updateProduct()
+remove order	removeOrder()
+generate reports	generateReport()
+
+
+}

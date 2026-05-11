@@ -1,0 +1,104 @@
+Week 07 Ex1
+
+public class Room {
+    protected int roomNo;
+    protected String guestName;
+    protected int nights;
+
+    public Room() {
+        roomNo = 000;
+        guestName = "unknown";
+        nights = 0;
+    }
+
+    public Room(int roomNo, String guestName, int nights) {
+        this.roomNo = roomNo;
+        this.guestName = guestName;
+        this.nights = nights;
+    }
+
+    public void displayRoomDetails(){
+        System.out.println("Room Number: "  + roomNo);
+        System.out.println("Guest Name: " + guestName);
+        System.out.println("Nights: " + nights);
+    }
+
+    double calculateRoomCost(){
+        return 100*nights;
+    }
+
+    double calculateRoomCost(int discountPerNight){
+        double base = calculateRoomCost();
+        return base - (discountPerNight*nights);
+    }
+}
+
+public class StandardRoom extends Room{
+    private boolean wifi;
+
+    public StandardRoom() {
+        super();
+        wifi = false;
+    }
+
+    @Override
+    double calculateRoomCost() {
+        return 100*nights;
+    }
+
+    @Override
+    public void displayRoomDetails() {
+        super.displayRoomDetails();
+        System.out.println("Wifi Included: " + (wifi ? "Yes" : "No"));
+        System.out.println("Total Cost: $" + calculateRoomCost());
+        System.out.println("Discounted Cost (per night $10 off): $" + calculateRoomCost(10));
+    }
+}
+
+
+public class LuxurySuite extends Room {
+    private boolean extraService;
+
+    public LuxurySuite(int roomNo, String guestName, int nights, boolean extraService) {
+        super(roomNo, guestName, nights);
+        this.extraService = extraService;
+    }
+
+    @Override
+    double calculateRoomCost() {
+        double tot = 200 * nights;
+        if (extraService)
+            tot += 75;
+        return tot;
+    }
+
+    @Override
+    public void displayRoomDetails() {
+        super.displayRoomDetails();
+        System.out.println("Breakfast & Airport Pickup: " + (extraService ? "Included" : "Not Included"));
+        System.out.println("Total Cost: $" + calculateRoomCost());
+        System.out.println("Discounted Cost (per night $15 off): $" + calculateRoomCost(15));
+    }
+}
+
+
+public class HotelApp {
+    public static void main(String[] args) {
+        StandardRoom s1 = new StandardRoom();
+        LuxurySuite l1 = new LuxurySuite(305, "Alice Green", 3,true);
+
+        System.out.println("Standard Room Cost (no discount): " + s1.calculateRoomCost());
+        System.out.println("Standard Room Cost (discount): " + s1.calculateRoomCost(10));
+
+        System.out.println();
+
+        System.out.println("Luxury Suite Cost (no discount): " + l1.calculateRoomCost());
+        System.out.println("Luxury Suite Cost (discount): " + l1.calculateRoomCost(20));
+
+        System.out.println("\n--- Standard Room Details ---");
+        s1.displayRoomDetails();
+
+        System.out.println("\n--- Luxury Suite Details ---");
+        l1.displayRoomDetails();
+    }
+}
