@@ -1,0 +1,41 @@
+Week 02
+
+
+import java.util.Scanner;
+
+public class Lab02Q5 {
+    static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        String words[] = new String[5];
+
+        System.out.println("Enter 5 word :");
+        for(int i = 0 ; i < words.length ; i++){
+            System.out.printf("word "+(i+1) +": ");
+            words[i]= sc.nextLine();
+        }
+
+        String longestWord = words[0];
+        for(String word:words){
+            if(word.length() > longestWord.length()){
+                longestWord = word;
+            }
+        }
+        System.out.println("\nLongest Word is : "+longestWord);
+
+        int totalChars = 0 ;
+        for(String word:words){
+            totalChars += word.length();
+        }
+        System.out.println("Total Number of Characters is : "+totalChars);
+
+        System.out.println("words with an even number : ");
+        for(String word:words){
+            if(word.length() %2 == 0){
+                System.out.println(word);
+            }
+        }
+
+    }
+}

@@ -1,0 +1,81 @@
+Week 03
+
+import java.util.Scanner;
+
+class Employee {
+
+    private int empId;
+    private String name;
+    private double basicSalary;
+    private int rating;
+
+    public Employee(int empId, String name, double basicSalary, int rating) {
+        this.empId = empId;
+        this.name = name;
+        this.basicSalary = basicSalary;
+        this.rating = rating;
+    }
+
+    public double calculateBonus() {
+
+        double bonus = 0;
+
+        switch(rating) {
+            case 5:
+                bonus = basicSalary * 0.20;
+                break;
+            case 4:
+                bonus = basicSalary * 0.15;
+                break;
+            case 3:
+                bonus = basicSalary * 0.10;
+                break;
+            case 2:
+                bonus = basicSalary * 0.05;
+                break;
+            case 1:
+                bonus = 0;
+                break;
+            default:
+                System.out.println("Invalid Rating");
+        }
+
+        return bonus;
+    }
+
+    public double calculateTotalSalary() {
+        return basicSalary + calculateBonus();
+    }
+
+    public void displayDetails() {
+
+        System.out.println("\nEmployee Details:");
+        System.out.println("Employee ID: " + empId);
+        System.out.println("Name: " + name);
+        System.out.println("Basic Salary: " + basicSalary);
+        System.out.println("Performance Rating: " + rating);
+        System.out.println("Bonus: " + calculateBonus());
+        System.out.println("Total Salary: " + calculateTotalSalary());
+    }
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter Employee ID: ");
+        int id = sc.nextInt();
+        sc.nextLine();
+
+        System.out.print("Enter Employee Name: ");
+        String name = sc.nextLine();
+
+        System.out.print("Enter Basic Salary: ");
+        double salary = sc.nextDouble();
+
+        System.out.print("Enter Performance Rating (1-5): ");
+        int rating = sc.nextInt();
+
+        Employee emp = new Employee(id, name, salary, rating);
+
+        emp.displayDetails();
+    }
+}

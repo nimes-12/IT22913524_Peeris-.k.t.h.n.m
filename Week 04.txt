@@ -1,0 +1,105 @@
+Week 04
+
+public class Driver {
+
+    private String driverID;
+    private String driverName;
+    private double baseSalary;
+    private int performanceScore;
+
+    public Driver(String driverID,String driverName){
+        this.driverID=driverID;
+        this.driverName=driverName;
+        this.baseSalary=0;
+        this.performanceScore = 1;
+    }
+
+    public Driver(double baseSalary){
+        this.driverID="UNKNOWN";
+        this.driverName="UNKNOWN";
+        this.baseSalary=baseSalary;
+        this.performanceScore=1;
+    }
+
+    public Driver(String driverID,String driverName,double baseSalary,int performanceScore){
+        this.driverID=driverID;
+        this.driverName=driverName;
+        this.baseSalary=baseSalary;
+        setPerformanceScore(performanceScore);
+    }
+
+    public String getDriverID() {
+        return driverID;
+    }
+
+    public void setDriverID(String driverID) {
+        this.driverID = driverID;
+    }
+
+    public int getPerformanceScore() {
+        return performanceScore;
+    }
+
+    public void setPerformanceScore(int performanceScore) {
+        if(performanceScore >=1 && performanceScore <= 5){
+            this.performanceScore = performanceScore;
+        }else{
+            this.performanceScore=1;
+        }
+    }
+
+    private double getBonusPercentage(int score ){
+        switch (score){
+            case 5:return 0.25;
+            case 4:return 0.20;
+            case 3:return 0.15;
+            case 2:return 0.10;
+            default:return 0.0;
+        }
+    }
+
+    public double calculateBonus(){
+        return baseSalary*getBonusPercentage(performanceScore);
+    }
+
+    public double calculateBonus(int score){
+        if(score < 1 || score > 5){
+            score = 1;
+        }
+        return baseSalary*getBonusPercentage(score);
+    }
+
+    public double calculateTotalSalary(){
+        return baseSalary + calculateBonus();
+    }
+
+    public void displayDetails(){
+        System.out.println("Driver ID:         "+driverID);
+        System.out.println("Driver Name:       "+driverName);
+        System.out.println("Base Salary:       "+baseSalary);
+        System.out.println("Performance Score: "+performanceScore);
+        System.out.println("Bonus:             "+calculateBonus());
+        System.out.println("Total Salary:      "+calculateTotalSalary());
+        System.out.println(" ");
+    }
+
+
+}
+
+
+
+public class Main{
+    public static void main(String[] args) {
+
+        Driver d1 = new Driver("D1001","John Smith",4000,5);
+        Driver d2 = new Driver("D1002","Emily Davis",3500,3);
+        Driver d3 = new Driver("D1003","Michael Johnson",5000,1);
+
+        d1.displayDetails();
+        d2.displayDetails();
+        d3.displayDetails();
+
+        System.out.println("Bonus for driver 3 with custom rating 4: "+d3.calculateBonus(4));
+
+    }
+}
